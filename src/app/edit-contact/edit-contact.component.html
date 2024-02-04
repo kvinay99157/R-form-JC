@@ -1,0 +1,103 @@
+<div class="content">
+  <h1 class="header">
+    Edit Contact
+  </h1>
+  <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
+    <section>
+      <nav>Name/Info</nav>
+      <div>
+        <!-- add error field here to show red or other color according to css outline border  -->
+        <input formControlName="firstName" [class.error]="firstNam.invalid && firstNam.touched"
+          placeholder="First Name" />
+
+        <!-- <em *ngIf="contactForm.controls.firstName.invalid && contactForm.controls.firstName.touched">Please enter a
+          First Name</em> -->
+
+        <!-- get this all one by getter method  -->
+        <!-- <em *ngIf="firstNam.invalid && firstNam.touched">Please enter a
+          First Name</em> -->
+
+        <!-- get from ts file add here min.length and print one more message -->
+        <em *ngIf="firstNam.errors?.['required'] && firstNam.touched">Please enter a
+          First Name</em>
+        <em *ngIf="firstNam.errors?.['minLength'] && firstNam.touched">Please enter atleast 3 value in
+          First Name</em>
+
+        <input formControlName="lastName" placeholder="Last Name" />
+        <!-- we dont want value in input field because we have here add date directive so remove value fron here -->
+        <!-- <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth" /> -->
+
+        <input formControlName="dateOfBirth" type="date"
+          [value]="contactForm.controls.dateOfBirth.value | date: 'yyyy-MM-dd'" placeholder="Date of Birth" />
+        <!-- <input type="number" formControlName="favoritesRanking" placeholder="Favorites Ranking" /> -->
+        <!-- //use rnge instead of displaying number field -->
+        <div>
+          <span>favoritesRanking:</span>
+          <input type="range" min="0" max="5" formControlName="favoritesRanking" placeholder="Favorites Ranking" />
+          <span>{{contactForm.controls.favoritesRanking.value}}</span>
+        </div>
+
+        <div>
+          <input formControlName="personal" type="checkbox" /> Personal
+        </div>
+
+      </div>
+    </section>
+    <section>
+      <nav>Phone</nav>
+      <div formGroupName="phone" class="flex-column">
+        <div class="flex-group">
+          <input formControlName="phoneNumber" placeholder="Phone" />
+          <img src="/assets/plus-grey-blue.png" class="add" />
+        </div>
+        <div class="radio">
+          <!-- call here dynamically  dircet from interface -->
+          <!-- <input formControlName="phoneType" type="radio" value="mobile"> Mobile
+          <input formControlName="phoneType" type="radio" value="work"> Work
+          <input formControlName="phoneType" type="radio" value="other"> Other -->
+          <span *ngFor="let phoneType of phoneTypes">
+            <input formControlName="phoneType" type="radio" [value]="phoneType.value">{{phoneType.title}}
+          </span>
+        </div>
+      </div>
+    </section>
+    <section>
+      <nav>Address</nav>
+      <div>
+        <div formGroupName="address" class="address">
+          <div class="flex-group">
+            <input placeholder="Address" formControlName="streetAddress" />
+            <img src="/assets/plus-grey-blue.png" class="add" />
+          </div>
+          <input formControlName="city" placeholder="City" />
+          <input formControlName="state" placeholder="State/Region" />
+          <input formControlName="postalCode" placeholder="Zip/Postal Code" />
+          <select formControlName="addressType">
+            <option *ngFor="let adress of adressTypes" [value]="adress.value">{{adress.title}}</option>
+            <!-- //do the same thing as radio -->
+            <!-- <option  value="home">Home</option>
+            <option  value="work">Work</option>
+            <option  value="mobile">Other</option> -->
+          </select>
+        </div>
+        <em *ngIf="contactForm.controls.address.invalid && contactForm.controls.address.dirty">Incomplete Adress</em>
+      </div>
+    </section>
+    <section>
+      <nav>Notes</nav>
+      <div>
+        <textarea placeholder="Notes" rows="5" formControlName="notes" [class.error]="notes.invalid"></textarea>
+        <!-- this one is only for one custom word -->
+        <!-- <em *ngIf="notes.errors?.['restrictedWords']">restricted word found</em> -->
+
+        <!-- this one is multiple custom word in one field it is comming from ts file -->
+        <em *ngIf="notes.errors?.['restrictedWords']">restricted word found : {{notes.errors?.['restrictedWords']}}</em>
+      </div>
+    </section>
+    <div class="buttons">
+      <button class="secondary">Cancel</button>
+      <button [disabled]="contactForm.invalid" type="submit" class="primary">Save</button>
+    </div>
+  </form>
+
+</div>
