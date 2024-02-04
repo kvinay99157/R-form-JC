@@ -1,6 +1,6 @@
 # ContactsApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0. [live link](https://kvinay99157.github.io/angular-started-14/dist/apm)
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0. [live link](https://kvinay99157.github.io/R-form-JC/dist/contacts-app)
 
 ## Development server
 
